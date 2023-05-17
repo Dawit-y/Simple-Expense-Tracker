@@ -1,51 +1,81 @@
-import React, { useState} from "react";
-import "./addtransaction.css";
-import Balance from "./Balance";
-import History from "./History";
-const AddTransaction = () => {
-  const [id, setId] = useState(1)
-  const [amount, setAmount] = useState(0);
-  const[text, setText] = useState('')
-  const [transactions, setTransactions] = useState([])
+import React, { useState } from "react";
+import "../components/addtransaction.css";
+import Balance from "../components/Balance";
+import History from "../components/History";
+import {
+  Container,
+  Typography,
+  Stack,
+  Divider,
+  Box,
+  TextField,
+  Button,
   
-  const formHandler = (e) => {
-    e.preventDefault()
-    setTransactions(() => [
-      ...transactions,
+} from "@mui/material";
 
-      {
-        id : id,
-        text : text,
-        amount : amount
-      }
-    ])
-    setId((prev) => prev + 1)
-    setAmount('')
-    setText('')
+const AddTransaction = () => {
+  const [input, setInput] = useState({ id: 1, text: "", amount: 0 });
+  const [transactions, setTransactions] = useState([]);
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setTransactions((transactions) => [...transactions, input]);
+    setInput({ id: input.id + 1, text: "", amount: 0 });
+  };
 
-    
-  }
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+  };
 
   return (
-    <div className="container">
-      <Balance transactions = {transactions} />
-      <hr />
-      <p>History</p>
-      <hr />
-      {transactions.map(trans => (<History key={trans.id} trans={trans}/>))}
+    <Container>
+      <Box>
+        <Typography variant="h2" padding={4}>Expense Tracker</Typography>
+      </Box>
+      <Stack
+        direction="row"
+        divider={<Divider orientation="vertical" flexItem />}
+        spacing={2}
+      >
+        <Stack spacing={8}>
+          <Box>
+            <Typography variant="h5">Add Transaction</Typography>
+            <hr />
+            <Typography variant="subtitle2" >+ve for income, -ve for expense</Typography>
+            <form action="" onSubmit={submitHandler}>
+              <TextField
+                value={input.text}
+                onChange={changeHandler}
+                id="outlined-basic"
+                label="Text"
+                variant="outlined"
+                name="text"
+              />
+              <TextField
+                id="outlined-number"
+                label="Amount"
+                type="number"
+                name="amount"
+                value={input.amount}
+                onChange={changeHandler}
+              />
+              <Button type="submit" variant="contained">Add Transaction</Button>
+            </form>
+          </Box>
+          <Box>
+            <Balance transactions={transactions} />
+            <hr />
+          </Box>
+        </Stack>
+
+        <Box>
+          <Typography variant="h5">History</Typography>
+          <hr />
+            <History  transactions={transactions} />
       
-      <h3>Add Transaction</h3>
-      <hr />
-      <form action=""  >
-        <label htmlFor="">Text</label>
-        <input type="text" value={text} onChange={(e) => {setText(e.target.value)}} />
-
-        <label htmlFor="">Amount</label>
-        <input type="number" name="amount" value={amount} onChange={(e) => {setAmount(e.target.value)}}  />
-
-        <button type="submit" onClick={formHandler} >Add Transaction</button>
-      </form>
-    </div>
+        </Box>
+      </Stack>
+    </Container>
   );
 };
 

@@ -1,41 +1,34 @@
 import React from "react";
+import { Grid, Paper, Typography } from "@mui/material";
 
 const Balance = ({ transactions }) => {
   let total = null;
   transactions.map((trans) => (total = trans.amount * 1 + total * 1));
-  let expense = 0 ;
-  let income = null;
-  transactions.map((element) => {
-    if (element.amount < 0) {
-      console.log(expense);
-      return (expense = expense + parseInt(element.ammount));
+  let income = 0;
+  let expense = 0;
+  transactions.map((trans) => {
+    if (trans.amount < 0) {
+      return (expense = trans.amount * 1 + expense * 1);
     } else {
-      return (income = (income * 1) + ( element.ammount * 1));
+      return (income = trans.amount * 1 + income * 1);
     }
   });
+
   return (
-    <div>
-      <h3>Expense Tracker</h3>
-      <hr />
-      <p>Your balance</p>
-      <h1>${total}</h1>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
-        <div>
-          <p>Income</p>
-          <h2>${income}</h2>
-        </div>
-        <div>
-          <p>Expense</p>
-          <h2>${expense}</h2>
-        </div>
-      </div>
-    </div>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="subtitle1">Total value</Typography>
+        <Paper sx={{padding : "20px"}} >${total}</Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Typography variant="subtitle1">Income</Typography>
+        <Paper sx={{padding : "20px", borderLeft: "3px green solid"}} >${income}</Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Typography variant="subtitle1">Expense</Typography>
+        <Paper sx={{padding : "20px", borderLeft: "3px red solid"}} >${expense}</Paper>
+      </Grid>
+    </Grid>
   );
 };
 
