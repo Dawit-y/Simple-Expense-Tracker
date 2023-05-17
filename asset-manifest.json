@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Simple-Expense-Tracker/static/css/main.4198a1df.css",
+    "main.js": "/Simple-Expense-Tracker/static/js/main.cb789e15.js",
+    "index.html": "/Simple-Expense-Tracker/index.html",
+    "main.4198a1df.css.map": "/Simple-Expense-Tracker/static/css/main.4198a1df.css.map",
+    "main.cb789e15.js.map": "/Simple-Expense-Tracker/static/js/main.cb789e15.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4198a1df.css",
+    "static/js/main.cb789e15.js"
+  ]
+}
